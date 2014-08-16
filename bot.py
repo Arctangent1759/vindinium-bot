@@ -4,6 +4,7 @@ import json
 
 kKey = 'j0tzveqn'
 kVindiniumURL = 'http://vindinium.org/api/training'
+#kVindiniumURL = 'http://vindinium.org/api/arena'
 
 class Vindinium:
     def __init__(self):
@@ -34,13 +35,14 @@ class Vindinium:
         return json_res
     def Move(self, x, y):
         print self.CartCoordsToMove(x,y)
-        return self.HTTPPost(self.play_url, {'key':kKey, 'dir':self.CartCoordsToMove(x,y)})
+        return json.loads(self.HTTPPost(self.play_url, {'key':kKey, 'dir':self.CartCoordsToMove(x,y)}))
 
 v = Vindinium()
 v.Start()
 print v.view_url
 while True:
-    v.Move(1,0)
-    v.Move(-1,0)
-    v.Move(0,1)
-    v.Move(0,-1)
+    print v.Move(1,0)["game"]["board"]["tiles"]
+    print v.Move(-1,0)["game"]["board"]["tiles"]
+    print v.Move(0,1)["game"]["board"]["tiles"]
+    print v.Move(0,-1)["game"]["board"]["tiles"]
+
